@@ -63,6 +63,8 @@ composer test
 ## Helps
 
 - `./vendor/bin/psalm`
+- `./vendor/bin/testbench package:test`
+- `./vendor/bin/testbench`
 - `docker-compose exec php-fpm bash`
 
 ## Changelog
