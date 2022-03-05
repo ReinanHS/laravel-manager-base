@@ -1,0 +1,69 @@
+{
+    "name": "reinanhs/laravel-manager-base",
+    "description": "This package provides a flexible way to quickly create an admin panel",
+    "license": "MIT",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Reinan Gabriel",
+            "email": "reinangabriel1520@gmail.com",
+            "homepage": "https://github.com/ReinanHS"
+        }
+    ],
+    "homepage": "https://github.com/ReinanHS/laravel-manager-base",
+    "keywords": ["Laravel", "illuminate", "package", "admin"],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "~8"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4.1",
+        "orchestra/testbench": "^6.0",
+        "orchestra/testbench-browser-kit": "^6.0",
+        "phpunit/phpunit": "^9.0",
+        "sempro/phpunit-pretty-print": "^1.0",
+        "vimeo/psalm": "^4.22"
+    },
+    "autoload": {
+        "psr-4": {
+            "Reinanhs\\LaravelManagerBase\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Reinanhs\\LaravelManagerBase\\Tests\\": "tests"
+        }
+    },
+    "suggest": {
+        "sensiolabs/security-checker": "Required to use the security check command"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ],
+        "post-create-project-cmd": [
+            "php -r \"mkdir('src'.DIRECTORY_SEPARATOR.'Http');\"",
+            "php -r \"mkdir('src'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers');\"",
+            "php -r \"mkdir('src'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Middleware');\""
+        ],
+        "test": "./vendor/bin/phpunit"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Reinanhs\\LaravelManagerBase\\LaravelManagerBaseServiceProvider"
+            ],
+            "aliases": {
+                "LaravelManagerBase": "Reinanhs\\LaravelManagerBase\\Facades\\LaravelManagerBase"
+            }
+        }
+    }
+}
