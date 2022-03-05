@@ -7,11 +7,6 @@ namespace Reinanhs\LaravelManagerBase;
 
 class LaravelManagerBase
 {
-    public function __construct()
-    {
-        //
-    }
-
     // Build wonderful things
     public function example()
     {

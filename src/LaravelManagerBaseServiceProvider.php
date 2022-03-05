@@ -2,6 +2,7 @@
 
 namespace Reinanhs\LaravelManagerBase;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Reinanhs\LaravelManagerBase\Commands\FooCommand;
 use Reinanhs\LaravelManagerBase\Exceptions\InvalidConfiguration;
@@ -11,45 +12,58 @@ class LaravelManagerBaseServiceProvider extends ServiceProvider
     /**
      * This will be used to register config & view in your package namespace.
      *
-     * --> Replace with your package name <--
-     *
      * @var  string
      */
-    protected $vendorName = 'reinanhs';
-    protected $packageName = 'laravel-manager-base';
+    protected string $vendorName = 'reinanhs';
+    protected string $packageName = 'laravel-manager-base';
 
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
-    protected $defer = false;
+    protected bool $defer = false;
 
     /**
      * A list of artisan commands for your package.
      *
      * @var array
      */
-    protected $commands = [
+    protected array $commands = [
         FooCommand::class,
     ];
 
     /**
      * Perform post-registration booting of services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', $this->vendorName);
         // $this->loadViewsFrom(__DIR__.'/../resources/views', $this->vendorName);
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->registerRoutes();
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
+    }
+
+    protected function registerRoutes(): void
+    {
+        Route::group($this->routeConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
+    }
+
+    protected function routeConfiguration(): array
+    {
+        $config = config($this->packageName);
+
+        return [
+            'prefix' => $config['route']['prefix'],
+            'as' => $config['route']['name'] . '.',
+        ];
     }
 
     /**
@@ -80,7 +94,7 @@ class LaravelManagerBaseServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [$this->packageName];
     }
@@ -90,7 +104,7 @@ class LaravelManagerBaseServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootForConsole()
+    protected function bootForConsole(): void
     {
         // Publishing the configuration file
         $this->publishes([
@@ -136,7 +150,7 @@ class LaravelManagerBaseServiceProvider extends ServiceProvider
      * @throws InvalidConfiguration exception or null
      * @see  \Reinanhs\LaravelManagerBase\Exceptions\InvalidConfiguration
      */
-    protected function guardAgainstInvalidConfiguration(array $config = null)
+    protected function guardAgainstInvalidConfiguration(array $config = null): void
     {
         // Here you can add as many checks as your package config needed to
         // consider it valid.
@@ -151,7 +165,7 @@ class LaravelManagerBaseServiceProvider extends ServiceProvider
      *
      * @return bool
      */
-    protected function isLumen()
+    protected function isLumen(): bool
     {
         return str_contains($this->app->version(), 'Lumen') === true;
     }

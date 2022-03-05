@@ -15,5 +15,8 @@ return [
     'version' => '0.0.1',
 
     // ...
-
+    'route' => [
+        'prefix' => 'api/manager',
+        'name' => 'api.manager',
+    ]
 ];
