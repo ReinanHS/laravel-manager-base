@@ -40,7 +40,7 @@ class LaravelManagerBaseServiceProvider extends ServiceProvider
     {
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', $this->vendorName);
         // $this->loadViewsFrom(__DIR__.'/../resources/views', $this->vendorName);
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->registerRoutes();
 
         // Publishing is only necessary when using the CLI.
